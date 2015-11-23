@@ -8,7 +8,7 @@ import csv
 def callback(data):
 
    c = csv.writer(open("/home/jinahadam/catkin_ws/src/testing/px4log.csv", "ab"))
-   c.writerow([data.header.stamp.secs,data.header.stamp.nsecs,data.channels[0],data.channels[1],data.channels[2],data.channels[3],data.channels[4],data.channels[5],data.channels[6],data.channels[7]])
+   c.writerow([data.header.stamp.nsecs,data.header.stamp.secs,data.channels[0],data.channels[1],data.channels[2],data.channels[3],data.channels[4],data.channels[5],data.channels[6],data.channels[7]])
 
 
     
