@@ -10,11 +10,14 @@ from geometry_msgs.msg import Quaternion
 flip = 0
 cdata = 0
 error_offset = 3
-pub = rospy.Publisher('joytester', Joy, queue_size=10)
+pub = rospy.Publisher('joytester', Joy, queue_size=50)
 csv_data = []
 k = 0
 
-testing_pub = rospy.Publisher('testing_diff', Quaternion, queue_size = 10)
+#offset for greater frequncey . default 1
+frequency_offset = 1
+
+testing_pub = rospy.Publisher('testing_diff', Quaternion, queue_size = 50)
 
 def convert_ppm(ppm_val):
     result = 0
@@ -29,7 +32,7 @@ def callback(data):
     global error_offset
     global k 
     
-    last_row = csv_data[k-1]
+    last_row = csv_data[k-frequency_offset]
     diff = Quaternion()
     #print(round(float(last_row[1])-convert_ppm(data.channels[3]),4), data.channels[3])
     #print(round(float(last_row[2])-convert_ppm(data.channels[1]),4), data.channels[1])
@@ -52,6 +55,8 @@ def callback(data):
         msg.buttons = (0,0,0,0,0,0,0,0,0,0,0)
 	k = k + 1
         pub.publish(msg)
+
+       
 
        
     else:
